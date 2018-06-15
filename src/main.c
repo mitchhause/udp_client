@@ -171,9 +171,9 @@ int main(int argc, char *argv[]) {
 	strcpy(path,"data_files/");
 	strcat(path,filename);
 	
-    //open file to write to
+    	//open file to write to
 	FILE * fp;
-    fp = fopen(path,"w");
+   	 fp = fopen(path,"w");
 
 	//find number of files based on known payload size
 	//if number is no divisible by 100, round up to make sure number of files is correct
@@ -218,7 +218,7 @@ int main(int argc, char *argv[]) {
 			lastindex = j;
 			
 		}
-			lastcount += nread-6;
+		lastcount += nread-6;
 	}
 	
 	//add blank character if array size is odd
@@ -237,20 +237,18 @@ int main(int argc, char *argv[]) {
 	printf("%#04x\n",checksumval2);
 	
 	if(checksumval2 == chcksum){
-		printf("%s\n","success");
 		
+		printf("%s\n","success");
+		// AFTER all packets have been received ....
 
-
-	// AFTER all packets have been received ....
-
-	//print to the file (fp) 
-	for(int i = 0; i < numFiles; i++){
-		if (write(fileno(fp),poem[i], packSize[i]) < 0) {
-			perror("CLIENT: Problem writing to stdout");
-			exit(1);
+		//print to the file (fp) 
+		for(int i = 0; i < numFiles; i++){
+			if (write(fileno(fp),poem[i], packSize[i]) < 0) {
+				perror("CLIENT: Problem writing to stdout");
+				exit(1);
+			}
 		}
 	}
-			}
 	//else prompt user for name and resend
 	else{ 
 		char name[20];
@@ -278,7 +276,8 @@ int main(int argc, char *argv[]) {
 	else
 	fclose(fp);
 	  //printf("%d\n",2);
-    close(sockfd);
+    
+	close(sockfd);
   
 	printf("\n\n"); // So that the new terminal prompt starts two lines below
 	
